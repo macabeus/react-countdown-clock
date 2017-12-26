@@ -12,7 +12,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
   ReactCountdownClock = CreateReactClass({
     _seconds: 0,
-    _maxSeconds: 0, //offset
+    _maxSeconds: 0,
     _radius: null,
     _fraction: null,
     _content: null,
@@ -24,6 +24,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       if (prevProps.seconds !== this.props.seconds) {
         this._seconds = this.props.seconds;
         this._maxSeconds = this.props.maxSeconds;
+
+        if (this._maxSeconds > 0) {
+          this._percentOfMax = this._seconds / this._maxSeconds;
+        } else {
+          this._percentOfMax = 1;
+        }
+
         this._stopTimer();
         this._setupTimer();
       }
