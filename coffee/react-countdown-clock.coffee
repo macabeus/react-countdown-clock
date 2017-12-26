@@ -4,6 +4,7 @@ CreateReactClass = require 'create-react-class'
 
 ReactCountdownClock = CreateReactClass
   _seconds: 0
+  _maxSeconds: 0
   _radius: null
   _fraction: null
   _content: null
@@ -16,6 +17,7 @@ ReactCountdownClock = CreateReactClass
   componentDidUpdate: (prevProps) ->
     if prevProps.seconds != @props.seconds
       @_seconds = @props.seconds
+      @_maxSeconds = @props.maxSeconds
       @_stopTimer()
       @_setupTimer()
 
@@ -30,6 +32,10 @@ ReactCountdownClock = CreateReactClass
 
   componentDidMount: ->
     @_seconds = @props.seconds
+    if @_maxSeconds > 0
+      @_percentOfMax = @_seconds / @_maxSeconds
+    else
+      @_percentOfMax = 1
     @_setupTimer()
 
   componentWillUnmount: ->
@@ -166,7 +172,7 @@ ReactCountdownClock = CreateReactClass
       @props.fontSize
 
   _drawTimer: ->
-    percent = @_fraction * @_seconds + 1.5
+    percent = @_fraction * @_seconds * @_percentOfMax + 1.5
     formattedTime = @_formattedTime()
     text = if (@props.paused && @props.pausedText?) then @props.pausedText else formattedTime
 
