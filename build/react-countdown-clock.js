@@ -218,7 +218,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     _drawTimer: function () {
       var formattedTime, percent, text;
       percent = this._fraction * this._seconds * this._percentOfMax + 1.5;
-      console.log(this._percentOfMax);
       formattedTime = this._formattedTime();
       text = this.props.paused && this.props.pausedText != null ? this.props.pausedText : formattedTime;
       // Timer
